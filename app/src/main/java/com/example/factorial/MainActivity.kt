@@ -28,20 +28,22 @@ class MainActivity : AppCompatActivity() {
     private fun viewModelObserve() {
 
         viewModel.state.observe(this) {
-            if (it.isError) {
-                Toast.makeText(this, "The field is empty", Toast.LENGTH_SHORT).show()
-            }
-            if (it.isProgress) {
-                binding.progressBarCalculating.visibility = View.VISIBLE
-                binding.buttonCalculate.isEnabled = false
-            } else {
-                binding.progressBarCalculating.visibility = View.GONE
-                binding.buttonCalculate.isEnabled = true
-            }
-            binding.textViewResult.text = it.factorial
 
+            binding.progressBarCalculating.visibility = View.GONE
+            binding.buttonCalculate.isEnabled = true
+
+            when (it) {
+                is Error ->
+                    Toast.makeText(this, "The field is empty", Toast.LENGTH_SHORT).show()
+
+                is Progress -> {
+                    binding.progressBarCalculating.visibility = View.VISIBLE
+                    binding.buttonCalculate.isEnabled = false
+                }
+
+                is Result -> binding.textViewResult.text = it.value
+            }
         }
-
     }
 
 }

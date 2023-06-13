@@ -1,8 +1,6 @@
 package com.example.factorial
 
-class State(
-    val isError: Boolean = false,
-    val factorial: String = "",
-    val isProgress: Boolean = false
-) {
-}
+sealed class State
+object Error : State()
+object Progress : State()
+class Result(val value: String) : State()
