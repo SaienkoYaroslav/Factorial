@@ -26,25 +26,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun viewModelObserve() {
-        viewModel.error.observe(this) {
-            if (it == true) {
+
+        viewModel.state.observe(this) {
+            if (it.isError) {
                 Toast.makeText(this, "The field is empty", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        viewModel.factorial.observe(this) {
-            binding.textViewResult.text = it
-        }
-
-        viewModel.progress.observe(this) {
-            if (it == true) {
+            if (it.isProgress) {
                 binding.progressBarCalculating.visibility = View.VISIBLE
                 binding.buttonCalculate.isEnabled = false
-            }
-            else {
+            } else {
                 binding.progressBarCalculating.visibility = View.GONE
                 binding.buttonCalculate.isEnabled = true
             }
+            binding.textViewResult.text = it.factorial
+
         }
 
     }
