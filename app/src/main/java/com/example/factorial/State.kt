@@ -3,4 +3,4 @@ package com.example.factorial
 sealed class State
 object Error : State()
 object Progress : State()
-class Result(val value: String) : State()
+class Factorial(val value: String) : State()
